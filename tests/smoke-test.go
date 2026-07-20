@@ -103,6 +103,14 @@ func _smokeCase6() {
 }
 
 func _smokeCase7() {
+	planet, err := client.Planets.ListComets(context.Background())
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(planet)
+}
+
+func _smokeCase8() {
 	authentication, err := client.Authentication.NewUser(context.Background(), sdk.AuthenticationNewUserParams{
 		Email: sdk.F[string]("marc@scalar.com"),
 		Password: sdk.F[string]("i-love-scalar"),
@@ -114,7 +122,7 @@ func _smokeCase7() {
 	fmt.Println(authentication)
 }
 
-func _smokeCase8() {
+func _smokeCase9() {
 	authentication, err := client.Authentication.NewToken(context.Background(), sdk.AuthenticationNewTokenParams{
 		Credentials: sdk.CredentialsParam{
 		Email: sdk.F[string]("marc@scalar.com"),
@@ -127,7 +135,7 @@ func _smokeCase8() {
 	fmt.Println(authentication)
 }
 
-func _smokeCase9() {
+func _smokeCase10() {
 	authentication, err := client.Authentication.ListMe(context.Background())
 	if err != nil {
 		panic(err)
@@ -187,24 +195,31 @@ var cases = []smokeCase{
 	},
 
 	{
+		Operation: "listComets",
+		Method:    "GET",
+		Path:      "/comets",
+		Run:       _smokeCase7,
+	},
+
+	{
 		Operation: "createUser",
 		Method:    "POST",
 		Path:      "/user/signup",
-		Run:       _smokeCase7,
+		Run:       _smokeCase8,
 	},
 
 	{
 		Operation: "createToken",
 		Method:    "POST",
 		Path:      "/auth/token",
-		Run:       _smokeCase8,
+		Run:       _smokeCase9,
 	},
 
 	{
 		Operation: "listMe",
 		Method:    "GET",
 		Path:      "/me",
-		Run:       _smokeCase9,
+		Run:       _smokeCase10,
 	},
 
 }

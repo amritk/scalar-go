@@ -12,6 +12,7 @@ Complete reference of every operation, grouped by resource. See [the README](./R
   - [Delete a planet](#delete-a-planet)
   - [Upload an image to a planet](#upload-an-image-to-a-planet)
   - [List all moons (publish test)](#list-all-moons-publish-test)
+  - [List comets](#list-comets)
 - [`Authentication`](#authentication)
   - [Create a user](#create-a-user)
   - [Get a token](#get-a-token)
@@ -148,6 +149,22 @@ Retrieve all moons including orbital period and parent planet.
 
 ```go
 planet, err := client.Planets.ListMoons(context.Background())
+if err != nil {
+	panic(err)
+}
+fmt.Println(planet)
+```
+
+### List comets
+
+Fetch all tracked comets.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`[]PlanetListCometsResponse`](./planet.go) |
+
+```go
+planet, err := client.Planets.ListComets(context.Background())
 if err != nil {
 	panic(err)
 }
