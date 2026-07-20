@@ -4,7 +4,10 @@
       "release-type": "go",
       "extra-files": [
         "internal/version.go"
-      ]
+      ],
+      "versioning": "prerelease",
+      "prerelease-type": "next",
+      "prerelease": true
     }
   },
   "bump-minor-pre-major": true,
