@@ -194,7 +194,7 @@ func (r *PlanetService) UploadImage(ctx context.Context, planetID int64, body Pl
 	return res, err
 }
 
-// Fetch every known moon in the galaxy, with orbital data.
+// Retrieve all moons including orbital period and parent planet.
 //
 // Parameters:
 //     ctx: Context for the request.
