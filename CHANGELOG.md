@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1-next.1](https://github.com/amritk/scalar-go/compare/v0.2.0-next.1...v0.2.1-next.1) (2026-07-20)
+
+
+### Chores
+
+* **api:** update generated SDK content ([2d6d5a0](https://github.com/amritk/scalar-go/commit/2d6d5a051b5a32e6825071390fc8eaf6f111a38c))
+
 ## [0.2.0-next.1](https://github.com/amritk/scalar-go/compare/v0.2.0-next...v0.2.0-next.1) (2026-07-20)
 
 
