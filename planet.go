@@ -194,7 +194,11 @@ func (r *PlanetService) UploadImage(ctx context.Context, planetID int64, body Pl
 	return res, err
 }
 
+<<<<<<< HEAD
 // HUMAN EDIT: lists moons, hand-tuned docs by the SDK team.
+=======
+// Retrieve all moons including orbital period and parent planet.
+>>>>>>> 0861e8525efb87ac56cba1ff8cd330de542cb2f0
 //
 // Parameters:
 //     ctx: Context for the request.

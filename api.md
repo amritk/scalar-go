@@ -140,7 +140,7 @@ fmt.Println(planet)
 
 ### Get all moons
 
-Fetch every known moon in the galaxy, with orbital data.
+Retrieve all moons including orbital period and parent planet.
 
 | Direction | Type |
 | --- | --- |
