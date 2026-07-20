@@ -11,6 +11,7 @@ Complete reference of every operation, grouped by resource. See [the README](./R
   - [Update a planet](#update-a-planet)
   - [Delete a planet](#delete-a-planet)
   - [Upload an image to a planet](#upload-an-image-to-a-planet)
+  - [Get all moons](#get-all-moons)
 - [`Authentication`](#authentication)
   - [Create a user](#create-a-user)
   - [Get a token](#get-a-token)
@@ -131,6 +132,22 @@ Got a crazy good photo of a planet? Share it with the world!
 
 ```go
 planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
+if err != nil {
+	panic(err)
+}
+fmt.Println(planet)
+```
+
+### Get all moons
+
+Fetch every known moon.
+
+| Direction | Type |
+| --- | --- |
+| Response | [`[]PlanetListMoonsResponse`](./planet.go) |
+
+```go
+planet, err := client.Planets.ListMoons(context.Background())
 if err != nil {
 	panic(err)
 }
