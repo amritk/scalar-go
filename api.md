@@ -11,7 +11,7 @@ Complete reference of every operation, grouped by resource. See [the README](./R
   - [Update a planet](#update-a-planet)
   - [Delete a planet](#delete-a-planet)
   - [Upload an image to a planet](#upload-an-image-to-a-planet)
-  - [Get all moons](#get-all-moons)
+  - [List all moons (concurrency test)](#list-all-moons-concurrency-test)
 - [`Authentication`](#authentication)
   - [Create a user](#create-a-user)
   - [Get a token](#get-a-token)
@@ -138,7 +138,7 @@ if err != nil {
 fmt.Println(planet)
 ```
 
-### Get all moons
+### List all moons (concurrency test)
 
 Retrieve all moons including orbital period and parent planet.
 
