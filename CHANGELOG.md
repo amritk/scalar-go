@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0-next.1](https://github.com/amritk/scalar-go/compare/v0.2.0-next...v0.2.0-next.1) (2026-07-20)
+
+
+### Features
+
+* **api:** add operation planets.listComets ([67330c9](https://github.com/amritk/scalar-go/commit/67330c98bdac5e03e2e5c5489e05609c0266b008))
+
 ## [0.2.0-next](https://github.com/amritk/scalar-go/compare/v0.1.0...v0.2.0-next) (2026-07-20)
 
 
