@@ -157,7 +157,7 @@ fmt.Println(planet)
 
 ### List all tracked comets
 
-Fetch all tracked comets.
+Fetch all tracked comets, with orbit data.
 
 | Direction | Type |
 | --- | --- |
