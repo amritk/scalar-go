@@ -194,6 +194,52 @@ func (r *PlanetService) UploadImage(ctx context.Context, planetID int64, body Pl
 	return res, err
 }
 
+// HUMAN RESOLVED: retrieve all moons, hand-tuned docs.
+//
+// Parameters:
+//     ctx: Context for the request.
+//     opts: Options to apply to this request.
+//
+// Returns:
+//     *[]PlanetListMoonsResponse: OK
+//
+// Example:
+//
+//     planet, err := client.Planets.ListMoons(context.Background())
+//     if err != nil {
+//     	panic(err)
+//     }
+//     fmt.Println(planet)
+func (r *PlanetService) ListMoons(ctx context.Context, opts ...option.RequestOption) (res *[]PlanetListMoonsResponse, err error) {
+	opts = slices.Concat(r.Options, opts)
+	path := "moons"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return res, err
+}
+
+// Fetch all tracked comets.
+//
+// Parameters:
+//     ctx: Context for the request.
+//     opts: Options to apply to this request.
+//
+// Returns:
+//     *[]PlanetListCometsResponse: OK
+//
+// Example:
+//
+//     planet, err := client.Planets.ListComets(context.Background())
+//     if err != nil {
+//     	panic(err)
+//     }
+//     fmt.Println(planet)
+func (r *PlanetService) ListComets(ctx context.Context, opts ...option.RequestOption) (res *[]PlanetListCometsResponse, err error) {
+	opts = slices.Concat(r.Options, opts)
+	path := "comets"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return res, err
+}
+
 type Planet struct {
 	ID int64 `json:"id" api:"required"`
 	Name string `json:"name" api:"required"`
@@ -420,6 +466,50 @@ func (r *PlanetUploadImageResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r planetUploadImageResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+type PlanetListMoonsResponse struct {
+	ID int64 `json:"id"`
+	Name string `json:"name"`
+	JSON planetListMoonsResponseJSON `json:"-"`
+}
+
+// planetListMoonsResponseJSON contains the JSON metadata for the struct [PlanetListMoonsResponse]
+type planetListMoonsResponseJSON struct {
+	ID apijson.Field
+	Name apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PlanetListMoonsResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r planetListMoonsResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+type PlanetListCometsResponse struct {
+	ID int64 `json:"id"`
+	Name string `json:"name"`
+	JSON planetListCometsResponseJSON `json:"-"`
+}
+
+// planetListCometsResponseJSON contains the JSON metadata for the struct [PlanetListCometsResponse]
+type planetListCometsResponseJSON struct {
+	ID apijson.Field
+	Name apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *PlanetListCometsResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r planetListCometsResponseJSON) RawJSON() string {
 	return r.raw
 }
 
