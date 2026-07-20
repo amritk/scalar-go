@@ -217,7 +217,7 @@ func (r *PlanetService) ListMoons(ctx context.Context, opts ...option.RequestOpt
 	return res, err
 }
 
-// Fetch all tracked comets.
+// Fetch all tracked comets, with orbit data.
 //
 // Parameters:
 //     ctx: Context for the request.
