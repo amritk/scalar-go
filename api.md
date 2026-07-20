@@ -12,7 +12,7 @@ Complete reference of every operation, grouped by resource. See [the README](./R
   - [Delete a planet](#delete-a-planet)
   - [Upload an image to a planet](#upload-an-image-to-a-planet)
   - [List all moons (publish test)](#list-all-moons-publish-test)
-  - [List comets](#list-comets)
+  - [List all tracked comets](#list-all-tracked-comets)
 - [`Authentication`](#authentication)
   - [Create a user](#create-a-user)
   - [Get a token](#get-a-token)
@@ -155,7 +155,7 @@ if err != nil {
 fmt.Println(planet)
 ```
 
-### List comets
+### List all tracked comets
 
 Fetch all tracked comets.
 
