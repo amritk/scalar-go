@@ -1,0 +1,51 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Scalar Ruby Test",
+    "version": "1.0.0",
+    "description": "Minimal API used to test the generated Ruby SDK release pipeline.",
+    "x-scalar-sdk-installation": [
+      {
+        "lang": "Go",
+        "description": "```sh\ngo get scalarGoTest\n```"
+      }
+    ]
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com"
+    }
+  ],
+  "paths": {
+    "/ping": {
+      "get": {
+        "operationId": "ping",
+        "summary": "Ping the API",
+        "responses": {
+          "200": {
+            "description": "pong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Go",
+            "label": "Go",
+            "source": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\tsdk \"github.com/amritk/scalar-go\"\n)\n\nfunc main() {\n\tclient := sdk.NewClient()\n\n\tping, err := client.Ping.Ping(context.Background())\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(ping)\n}"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "name": "ScalarGoTest",
+  "slug": "scalarGoTest",
+  "generatorVersion": "0.19.5",
+  "servers": [
+    "https://api.example.com"
+  ],
+  "environments": {
+    "production": "https://api.example.com"
+  },
+  "environmentOrder": [
+    "production"
+  ],
+  "auth": [],
+  "authDetails": [],
+  "clientHeaderParams": [],
+  "schemas": [],
+  "resources": [
+    "ping"
+  ],
+  "publicResources": [
+    "ping"
+  ],
+  "operations": [
+    {
+      "resource": "ping",
+      "publicResource": "ping",
+      "operation": "ping",
+      "publicOperation": "ping",
+      "deprecated": false,
+      "method": "GET",
+      "path": "/ping",
+      "pathParams": [],
+      "publicPathParams": [],
+      "queryParams": [],
+      "publicQueryParams": [],
+      "headerParams": [],
+      "publicHeaderParams": [],
+      "bodyParams": [],
+      "publicBodyParams": [],
+      "bodyParamDetails": [],
+      "pathParamDetails": [],
+      "queryParamDetails": [],
+      "headerParamDetails": [],
+      "cookieParams": [],
+      "publicCookieParams": [],
+      "cookieParamDetails": [],
+      "response": {
+        "status": "200",
+        "contentType": "application/json",
+        "encoding": "json",
+        "contents": [
+          {
+            "contentType": "application/json",
+            "encoding": "json"
+          }
+        ]
+      },
+      "errorResponses": [],
+      "responseLinks": [],
+      "transport": "http"
+    }
+  ],
+  "webhooks": []
+}
