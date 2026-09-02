@@ -1,4 +1,4 @@
-package scalargalaxy
+package demoapiscalargalaxy
 
 import (
 	"github.com/amritk/scalar-go/internal/param"

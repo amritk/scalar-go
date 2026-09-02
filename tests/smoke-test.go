@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 	"sync"
@@ -18,135 +19,204 @@ import (
 // Smoke test: calls every generated operation once to confirm the SDK can reach each endpoint.
 // Run it from this repo with `go run tests/smoke-test.go`. The generator also runs this file
 // against a mock server and reads the JSON report produced via SCALAR_SMOKE_REPORT.
-var client = sdk.NewClient(option.WithBearerAuth("test"), option.WithBasicAuthUsername("test"), option.WithBasicAuthPassword("test"), option.WithAPIKeyHeader("test"), option.WithAPIKeyQuery("test"), option.WithAPIKeyCookie("test"), option.WithHeader("X-API-Key", "test"), option.WithHeader("Authorization", "Bearer test"), option.WithHeader("Authorization", "Bearer test"), option.WithHeader("Authorization", "Bearer test"))
+var client = sdk.NewClient(option.WithBearerAuth("test"), option.WithBasicAuthUsername("test"), option.WithBasicAuthPassword("test"), option.WithAPIKeyHeader("test"), option.WithAPIKeyQuery("test"), option.WithAPIKeyCookie("test"), option.WithOAuth2("test"), option.WithOpenIDConnect("test"), option.WithHeader("X-API-Key", "test"), option.WithHeader("Authorization", "Bearer test"), option.WithHeader("Authorization", "Bearer test"), option.WithHeader("Authorization", "Bearer test"))
 
 type smokeResult struct {
 	Operation  string `json:"operation"`
 	Method     string `json:"method"`
 	Path       string `json:"path"`
+	Label      string `json:"label,omitempty"`
 	Status     string `json:"status"`
 	DurationMs int64  `json:"durationMs"`
 	Error      string `json:"error,omitempty"`
 }
 
+// Label says which of an operation's two calls this is — "required params" or "all params".
+// It is empty when the operation contributed a single case.
 type smokeCase struct {
 	Operation string
 	Method    string
 	Path      string
+	Label     string
 	Run       func()
 }
 
 func _smokeCase0() {
-	planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
-		Limit: sdk.F[int64](10),
+	planet, err := client.Planets.List(context.Background(), sdk.PlanetListParams{
+		Limit:  sdk.F[int64](10),
 		Offset: sdk.F[int64](0),
 	})
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(planet)
 }
 
 func _smokeCase1() {
 	planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
 		Planet: sdk.PlanetParam{
-		Name: sdk.F[string]("Mars"),
-	},
+			Name: sdk.F[string]("Mars"),
+		},
 	})
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(planet)
 }
 
 func _smokeCase2() {
-	planet, err := client.Planets.Get(context.Background(), 1)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(planet)
-}
-
-func _smokeCase3() {
-	planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
+	planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
 		Planet: sdk.PlanetParam{
-		Name: sdk.F[string]("Mars"),
-	},
+			Name:               sdk.F[string]("Mars"),
+			Description:        sdk.F[string]("The red planet"),
+			HabitabilityIndex:  sdk.F[float64](0.68),
+			PhysicalProperties: sdk.F[sdk.PlanetPhysicalPropertiesParam](sdk.PlanetPhysicalPropertiesParam{}),
+			Atmosphere:         sdk.F[[]sdk.PlanetAtmosphereParam]([]sdk.PlanetAtmosphereParam{sdk.PlanetAtmosphereParam{}}),
+			DiscoveredAt:       sdk.F[time.Time](time.Now()),
+			Image:              sdk.F[string]("https://cdn.scalar.com/photos/mars.jpg"),
+			Satellites: sdk.F[[]sdk.SatelliteParam]([]sdk.SatelliteParam{sdk.SatelliteParam{
+				Name: sdk.F[string]("Phobos"),
+			}}),
+			Creator:            sdk.F[sdk.UserParam](sdk.UserParam{}),
+			Tags:               sdk.F[[]string]([]string{""}),
+			SuccessCallbackURL: sdk.F[string]("https://example.com/webhook"),
+			FailureCallbackURL: sdk.F[string]("https://example.com/webhook"),
+		},
 	})
 	if err != nil {
 		panic(err)
 	}
+
+	fmt.Println(planet)
+}
+
+func _smokeCase3() {
+	planet, err := client.Planets.Get(context.Background(), 1)
+	if err != nil {
+		panic(err)
+	}
+
 	fmt.Println(planet)
 }
 
 func _smokeCase4() {
+	planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
+		Planet: sdk.PlanetParam{
+			Name: sdk.F[string]("Mars"),
+		},
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(planet)
+}
+
+func _smokeCase5() {
+	planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
+		Planet: sdk.PlanetParam{
+			Name:               sdk.F[string]("Mars"),
+			Description:        sdk.F[string]("The red planet"),
+			HabitabilityIndex:  sdk.F[float64](0.68),
+			PhysicalProperties: sdk.F[sdk.PlanetPhysicalPropertiesParam](sdk.PlanetPhysicalPropertiesParam{}),
+			Atmosphere:         sdk.F[[]sdk.PlanetAtmosphereParam]([]sdk.PlanetAtmosphereParam{sdk.PlanetAtmosphereParam{}}),
+			DiscoveredAt:       sdk.F[time.Time](time.Now()),
+			Image:              sdk.F[string]("https://cdn.scalar.com/photos/mars.jpg"),
+			Satellites: sdk.F[[]sdk.SatelliteParam]([]sdk.SatelliteParam{sdk.SatelliteParam{
+				Name: sdk.F[string]("Phobos"),
+			}}),
+			Creator:            sdk.F[sdk.UserParam](sdk.UserParam{}),
+			Tags:               sdk.F[[]string]([]string{""}),
+			SuccessCallbackURL: sdk.F[string]("https://example.com/webhook"),
+			FailureCallbackURL: sdk.F[string]("https://example.com/webhook"),
+		},
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(planet)
+}
+
+func _smokeCase6() {
 	err := client.Planets.Delete(context.Background(), 1)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func _smokeCase5() {
+func _smokeCase7() {
 	planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(planet)
-}
 
-func _smokeCase6() {
-	planet, err := client.Planets.ListMoons(context.Background())
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(planet)
-}
-
-func _smokeCase7() {
-	planet, err := client.Planets.ListComets(context.Background())
-	if err != nil {
-		panic(err)
-	}
 	fmt.Println(planet)
 }
 
 func _smokeCase8() {
-	authentication, err := client.Authentication.NewUser(context.Background(), sdk.AuthenticationNewUserParams{
-		Email: sdk.F[string]("marc@scalar.com"),
-		Password: sdk.F[string]("i-love-scalar"),
-		Name: sdk.F[string]("Marc"),
+	planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{
+		Image: sdk.F[io.Reader](strings.NewReader("")),
 	})
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(authentication)
+
+	fmt.Println(planet)
 }
 
 func _smokeCase9() {
-	authentication, err := client.Authentication.NewToken(context.Background(), sdk.AuthenticationNewTokenParams{
-		Credentials: sdk.CredentialsParam{
-		Email: sdk.F[string]("marc@scalar.com"),
-		Password: sdk.F[string]("i-love-scalar"),
-	},
+	celestialBody, err := client.CelestialBodies.New(context.Background(), sdk.CelestialBodyNewParams{
+		CelestialBody: sdk.PlanetParam{
+			Name: sdk.F[string]("Mars"),
+		},
 	})
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(authentication)
+
+	fmt.Println(celestialBody)
 }
 
 func _smokeCase10() {
+	authentication, err := client.Authentication.NewUser(context.Background(), sdk.AuthenticationNewUserParams{
+		Email:    sdk.F[string]("marc@scalar.com"),
+		Password: sdk.F[string]("i-love-scalar"),
+		Name:     sdk.F[string]("Marc"),
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(authentication)
+}
+
+func _smokeCase11() {
+	authentication, err := client.Authentication.NewToken(context.Background(), sdk.AuthenticationNewTokenParams{
+		Email:    sdk.F[string]("marc@scalar.com"),
+		Password: sdk.F[string]("i-love-scalar"),
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(authentication)
+}
+
+func _smokeCase12() {
 	authentication, err := client.Authentication.ListMe(context.Background())
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(authentication)
 }
 
-
 var cases = []smokeCase{
 	{
-		Operation: "listAllData",
+		Operation: "list",
 		Method:    "GET",
 		Path:      "/planets",
 		Run:       _smokeCase0,
@@ -156,72 +226,91 @@ var cases = []smokeCase{
 		Operation: "create",
 		Method:    "POST",
 		Path:      "/planets",
+		Label:     "required params",
 		Run:       _smokeCase1,
+	},
+
+	{
+		Operation: "create",
+		Method:    "POST",
+		Path:      "/planets",
+		Label:     "all params",
+		Run:       _smokeCase2,
 	},
 
 	{
 		Operation: "retrieve",
 		Method:    "GET",
 		Path:      "/planets/{planetId}",
-		Run:       _smokeCase2,
+		Run:       _smokeCase3,
 	},
 
 	{
 		Operation: "update",
 		Method:    "PUT",
 		Path:      "/planets/{planetId}",
-		Run:       _smokeCase3,
+		Label:     "required params",
+		Run:       _smokeCase4,
+	},
+
+	{
+		Operation: "update",
+		Method:    "PUT",
+		Path:      "/planets/{planetId}",
+		Label:     "all params",
+		Run:       _smokeCase5,
 	},
 
 	{
 		Operation: "delete",
 		Method:    "DELETE",
 		Path:      "/planets/{planetId}",
-		Run:       _smokeCase4,
+		Run:       _smokeCase6,
 	},
 
 	{
 		Operation: "uploadImage",
 		Method:    "POST",
 		Path:      "/planets/{planetId}/image",
-		Run:       _smokeCase5,
-	},
-
-	{
-		Operation: "listMoons",
-		Method:    "GET",
-		Path:      "/moons",
-		Run:       _smokeCase6,
-	},
-
-	{
-		Operation: "listComets",
-		Method:    "GET",
-		Path:      "/comets",
+		Label:     "required params",
 		Run:       _smokeCase7,
+	},
+
+	{
+		Operation: "uploadImage",
+		Method:    "POST",
+		Path:      "/planets/{planetId}/image",
+		Label:     "all params",
+		Run:       _smokeCase8,
+	},
+
+	{
+		Operation: "create",
+		Method:    "POST",
+		Path:      "/celestial-bodies",
+		Run:       _smokeCase9,
 	},
 
 	{
 		Operation: "createUser",
 		Method:    "POST",
 		Path:      "/user/signup",
-		Run:       _smokeCase8,
+		Run:       _smokeCase10,
 	},
 
 	{
 		Operation: "createToken",
 		Method:    "POST",
 		Path:      "/auth/token",
-		Run:       _smokeCase9,
+		Run:       _smokeCase11,
 	},
 
 	{
 		Operation: "listMe",
 		Method:    "GET",
 		Path:      "/me",
-		Run:       _smokeCase10,
+		Run:       _smokeCase12,
 	},
-
 }
 
 func selectedCases() []smokeCase {
@@ -252,6 +341,7 @@ func runCase(testCase smokeCase) (result smokeResult) {
 		Operation: testCase.Operation,
 		Method:    testCase.Method,
 		Path:      testCase.Path,
+		Label:     testCase.Label,
 		Status:    "passed",
 	}
 	defer func() {
@@ -296,10 +386,14 @@ func main() {
 		}
 	} else {
 		for _, result := range results {
+			suffix := ""
+			if result.Label != "" {
+				suffix = " [" + result.Label + "]"
+			}
 			if result.Status == "passed" {
-				fmt.Printf("PASS %s (%s %s) %dms\n", result.Operation, result.Method, result.Path, result.DurationMs)
+				fmt.Printf("PASS %s%s (%s %s) %dms\n", result.Operation, suffix, result.Method, result.Path, result.DurationMs)
 			} else {
-				fmt.Fprintf(os.Stderr, "FAIL %s (%s %s)\n%s\n", result.Operation, result.Method, result.Path, result.Error)
+				fmt.Fprintf(os.Stderr, "FAIL %s%s (%s %s)\n%s\n", result.Operation, suffix, result.Method, result.Path, result.Error)
 			}
 		}
 		if len(results) == 0 {

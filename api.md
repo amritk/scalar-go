@@ -1,4 +1,4 @@
-# Scalar Galaxy Go API
+# Demo API (Scalar Galaxy) Go API
 
 Complete reference of every operation, grouped by resource. See [the README](./README.md) for usage and configuration.
 
@@ -11,8 +11,8 @@ Complete reference of every operation, grouped by resource. See [the README](./R
   - [Update a planet](#update-a-planet)
   - [Delete a planet](#delete-a-planet)
   - [Upload an image to a planet](#upload-an-image-to-a-planet)
-  - [List all moons (publish test)](#list-all-moons-publish-test)
-  - [List all tracked comets](#list-all-tracked-comets)
+- [`CelestialBodies`](#celestialbodies)
+  - [Create a celestial body](#create-a-celestial-body)
 - [`Authentication`](#authentication)
   - [Create a user](#create-a-user)
   - [Get a token](#get-a-token)
@@ -33,29 +33,32 @@ client := sdk.NewClient()
 
 ## `Planets`
 
+Everything about planets
+
 ### Get all planets
 
-It’s easy to say you know them all, but do you really? Retrieve all the planets and check whether you missed one.
+It's easy to say you know them all, but do you really? Retrieve all the planets and check whether you missed one.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`PlanetListAllDataParams`](./planet.go) |
-| Response | [`PlanetListAllDataResponse`](./planet.go) |
+| Request | [`PlanetListParams`](./planet.go) |
+| Response | [`PlanetListResponse`](./planet.go) |
 
 ```go
-planet, err := client.Planets.ListAllData(context.Background(), sdk.PlanetListAllDataParams{
-	Limit: sdk.F[int64](10),
+planet, err := client.Planets.List(context.Background(), sdk.PlanetListParams{
+	Limit:  sdk.F[int64](10),
 	Offset: sdk.F[int64](0),
 })
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(planet)
 ```
 
 ### Create a planet
 
-Time to play god and create a new planet. What do you think? Ah, don’t think too much. What could go wrong anyway?
+Time to play god and create a new planet. What do you think? Ah, don't think too much. What could go wrong anyway?
 
 | Direction | Type |
 | --- | --- |
@@ -65,18 +68,19 @@ Time to play god and create a new planet. What do you think? Ah, don’t think t
 ```go
 planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
 	Planet: sdk.PlanetParam{
-	Name: sdk.F[string]("Mars"),
-},
+		Name: sdk.F[string]("Mars"),
+	},
 })
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(planet)
 ```
 
 ### Get a planet
 
-You’ll better learn a little bit more about the planets. It might come in handy once space travel is available for everyone.
+You'll better learn a little bit more about the planets. It might come in handy once space travel is available for everyone.
 
 | Direction | Type |
 | --- | --- |
@@ -87,6 +91,7 @@ planet, err := client.Planets.Get(context.Background(), 1)
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(planet)
 ```
 
@@ -102,12 +107,13 @@ Sometimes you make mistakes, that's fine. No worries, you can update all planets
 ```go
 planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
 	Planet: sdk.PlanetParam{
-	Name: sdk.F[string]("Mars"),
-},
+		Name: sdk.F[string]("Mars"),
+	},
 })
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(planet)
 ```
 
@@ -136,42 +142,37 @@ planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUpl
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(planet)
 ```
 
-### List all moons (publish test)
+## `CelestialBodies`
 
-Retrieve all moons including orbital period and parent planet.
+Celestial bodies are the planets and satellites in the Scalar Galaxy.
 
-| Direction | Type |
-| --- | --- |
-| Response | [`[]PlanetListMoonsResponse`](./planet.go) |
-
-```go
-planet, err := client.Planets.ListMoons(context.Background())
-if err != nil {
-	panic(err)
-}
-fmt.Println(planet)
-```
-
-### List all tracked comets
-
-Fetch all tracked comets, with orbit data.
+### Create a celestial body
 
 | Direction | Type |
 | --- | --- |
-| Response | [`[]PlanetListCometsResponse`](./planet.go) |
+| Request | [`CelestialBodyNewParams`](./celestialbody.go) |
+| Response | [`CelestialBody`](./celestialbody.go) |
 
 ```go
-planet, err := client.Planets.ListComets(context.Background())
+celestialBody, err := client.CelestialBodies.New(context.Background(), sdk.CelestialBodyNewParams{
+	CelestialBody: sdk.PlanetParam{
+		Name: sdk.F[string]("Mars"),
+	},
+})
 if err != nil {
 	panic(err)
 }
-fmt.Println(planet)
+
+fmt.Println(celestialBody)
 ```
 
 ## `Authentication`
+
+Some endpoints are public, but some require authentication. We provide all the required endpoints to create an account and authorize yourself.
 
 ### Create a user
 
@@ -184,13 +185,14 @@ Time to create a user account, eh?
 
 ```go
 authentication, err := client.Authentication.NewUser(context.Background(), sdk.AuthenticationNewUserParams{
-	Email: sdk.F[string]("marc@scalar.com"),
+	Email:    sdk.F[string]("marc@scalar.com"),
 	Password: sdk.F[string]("i-love-scalar"),
-	Name: sdk.F[string]("Marc"),
+	Name:     sdk.F[string]("Marc"),
 })
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(authentication)
 ```
 
@@ -201,24 +203,23 @@ Yeah, this is the boring security stuff. Just get your super secret token and mo
 | Direction | Type |
 | --- | --- |
 | Request | [`AuthenticationNewTokenParams`](./authentication.go) |
-| Response | [`AuthenticationNewTokenResponse`](./authentication.go) |
+| Response | [`Token`](./authentication.go) |
 
 ```go
 authentication, err := client.Authentication.NewToken(context.Background(), sdk.AuthenticationNewTokenParams{
-	Credentials: sdk.CredentialsParam{
-	Email: sdk.F[string]("marc@scalar.com"),
+	Email:    sdk.F[string]("marc@scalar.com"),
 	Password: sdk.F[string]("i-love-scalar"),
-},
 })
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(authentication)
 ```
 
 ### Get authenticated user
 
-Find yourself they say. That’s what you can do here.
+Find yourself they say. That's what you can do here.
 
 | Direction | Type |
 | --- | --- |
@@ -229,5 +230,6 @@ authentication, err := client.Authentication.ListMe(context.Background())
 if err != nil {
 	panic(err)
 }
+
 fmt.Println(authentication)
 ```

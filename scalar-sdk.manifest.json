@@ -1,14 +1,14 @@
 {
-  "name": "ScalarGalaxy",
-  "slug": "scalarGalaxy",
-  "generatorVersion": "0.19.0",
+  "name": "DemoApiScalarGalaxy",
+  "slug": "demoApiScalarGalaxy",
+  "generatorVersion": "0.32.0",
   "servers": [
     "https://galaxy.scalar.com",
     "{protocol}://void.scalar.com/{path}"
   ],
   "environments": {
     "production": "https://galaxy.scalar.com",
-    "responds_with_your_request_data": "{protocol}://void.scalar.com/{path}"
+    "responds_with_your_request_data": "https://void.scalar.com/{path}"
   },
   "environmentOrder": [
     "production",
@@ -107,8 +107,8 @@
   "clientHeaderParams": [],
   "schemas": [
     {
-      "name": "User",
-      "source": "User",
+      "name": "user",
+      "source": "user",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -153,8 +153,8 @@
       }
     },
     {
-      "name": "Credentials",
-      "source": "Credentials",
+      "name": "credentials",
+      "source": "credentials",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -199,8 +199,8 @@
       }
     },
     {
-      "name": "Token",
-      "source": "Token",
+      "name": "token",
+      "source": "token",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -227,8 +227,38 @@
       }
     },
     {
-      "name": "Planet",
-      "source": "Planet",
+      "name": "celestial_body",
+      "source": "celestial_body",
+      "publicAliases": [],
+      "deprecated": false,
+      "type": {
+        "kind": "union",
+        "variants": [
+          {
+            "kind": "ref",
+            "name": "planet"
+          },
+          {
+            "kind": "ref",
+            "name": "satellite"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "planet": "planet",
+            "satellite": "satellite"
+          }
+        },
+        "variantNames": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "name": "planet",
+      "source": "planet",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -295,7 +325,7 @@
           {
             "name": "type",
             "publicName": "type",
-            "required": false,
+            "required": true,
             "deprecated": false,
             "extensions": {
               "source": [
@@ -306,6 +336,7 @@
             "type": {
               "kind": "enum",
               "values": [
+                "planet",
                 "terrestrial",
                 "gas_giant",
                 "ice_giant",
@@ -313,6 +344,7 @@
                 "super_earth"
               ],
               "names": [
+                "Planet",
                 "Terrestrial",
                 "GasGiant",
                 "IceGiant",
@@ -320,6 +352,7 @@
                 "SuperEarth"
               ],
               "deprecations": [
+                false,
                 false,
                 false,
                 false,
@@ -465,11 +498,19 @@
                         }
                       }
                     ],
-                    "additionalProperties": false
+                    "additionalProperties": {
+                      "kind": "primitive",
+                      "type": "number",
+                      "format": "float"
+                    }
                   }
                 }
               ],
-              "additionalProperties": false
+              "additionalProperties": {
+                "kind": "primitive",
+                "type": "number",
+                "format": "float"
+              }
             }
           },
           {
@@ -516,7 +557,10 @@
                     }
                   }
                 ],
-                "additionalProperties": false
+                "additionalProperties": {
+                  "kind": "primitive",
+                  "type": "string"
+                }
               }
             }
           },
@@ -570,7 +614,7 @@
               "kind": "array",
               "items": {
                 "kind": "ref",
-                "name": "Satellite"
+                "name": "satellite"
               }
             }
           },
@@ -581,7 +625,7 @@
             "deprecated": false,
             "type": {
               "kind": "ref",
-              "name": "User"
+              "name": "user"
             }
           },
           {
@@ -626,8 +670,25 @@
             }
           },
           {
-            "name": "callbackUrl",
-            "publicName": "callbackUrl",
+            "name": "successCallbackUrl",
+            "publicName": "successCallbackUrl",
+            "required": false,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "https://example.com/webhook"
+            },
+            "type": {
+              "kind": "primitive",
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "failureCallbackUrl",
+            "publicName": "failureCallbackUrl",
             "required": false,
             "deprecated": false,
             "extensions": {
@@ -647,8 +708,191 @@
       }
     },
     {
-      "name": "PaginatedResource",
-      "source": "PaginatedResource",
+      "name": "satellite",
+      "source": "satellite",
+      "publicAliases": [],
+      "deprecated": false,
+      "type": {
+        "kind": "object",
+        "properties": [
+          {
+            "name": "id",
+            "publicName": "id",
+            "required": false,
+            "deprecated": false,
+            "access": "readOnly",
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 1
+            },
+            "type": {
+              "kind": "primitive",
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "name",
+            "publicName": "name",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Phobos"
+            },
+            "type": {
+              "kind": "primitive",
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "publicName": "description",
+            "required": false,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "Phobos is the larger and innermost of the two moons of Mars."
+            },
+            "type": {
+              "kind": "union",
+              "variants": [
+                {
+                  "kind": "primitive",
+                  "type": "string"
+                },
+                {
+                  "kind": "null"
+                }
+              ]
+            }
+          },
+          {
+            "name": "diameter",
+            "publicName": "diameter",
+            "required": false,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": 22.2
+            },
+            "type": {
+              "kind": "primitive",
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "type",
+            "publicName": "type",
+            "required": true,
+            "deprecated": false,
+            "extensions": {
+              "source": [
+                "examples"
+              ],
+              "examples": "moon"
+            },
+            "type": {
+              "kind": "enum",
+              "values": [
+                "satellite",
+                "moon",
+                "asteroid",
+                "comet"
+              ],
+              "names": [
+                "Satellite",
+                "Moon",
+                "Asteroid",
+                "Comet"
+              ],
+              "deprecations": [
+                false,
+                false,
+                false,
+                false
+              ]
+            }
+          },
+          {
+            "name": "orbit",
+            "publicName": "orbit",
+            "required": false,
+            "deprecated": false,
+            "type": {
+              "kind": "object",
+              "properties": [
+                {
+                  "name": "planetId",
+                  "publicName": "planetId",
+                  "required": false,
+                  "deprecated": false,
+                  "extensions": {
+                    "source": [
+                      "examples"
+                    ],
+                    "examples": 1
+                  },
+                  "type": {
+                    "kind": "primitive",
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                },
+                {
+                  "name": "orbitalPeriod",
+                  "publicName": "orbitalPeriod",
+                  "required": false,
+                  "deprecated": false,
+                  "extensions": {
+                    "source": [
+                      "examples"
+                    ],
+                    "examples": 0.319
+                  },
+                  "type": {
+                    "kind": "primitive",
+                    "type": "number",
+                    "format": "float"
+                  }
+                },
+                {
+                  "name": "distance",
+                  "publicName": "distance",
+                  "required": false,
+                  "deprecated": false,
+                  "extensions": {
+                    "source": [
+                      "examples"
+                    ],
+                    "examples": 9376
+                  },
+                  "type": {
+                    "kind": "primitive",
+                    "type": "number",
+                    "format": "float"
+                  }
+                }
+              ],
+              "additionalProperties": false
+            }
+          }
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "paginated_resource",
+      "source": "paginated_resource",
       "publicAliases": [],
       "deprecated": false,
       "type": {
@@ -744,67 +988,24 @@
         ],
         "additionalProperties": false
       }
-    },
-    {
-      "name": "Satellite",
-      "source": "Satellite",
-      "publicAliases": [],
-      "deprecated": false,
-      "type": {
-        "kind": "object",
-        "properties": [
-          {
-            "name": "name",
-            "publicName": "name",
-            "required": true,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": "Phobos"
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "string"
-            }
-          },
-          {
-            "name": "diameter",
-            "publicName": "diameter",
-            "required": false,
-            "deprecated": false,
-            "extensions": {
-              "source": [
-                "examples"
-              ],
-              "examples": 22.2
-            },
-            "type": {
-              "kind": "primitive",
-              "type": "number",
-              "format": "float"
-            }
-          }
-        ],
-        "additionalProperties": false
-      }
     }
   ],
   "resources": [
     "planets",
+    "celestialBodies",
     "authentication"
   ],
   "publicResources": [
     "planets",
+    "celestialBodies",
     "authentication"
   ],
   "operations": [
     {
       "resource": "planets",
       "publicResource": "planets",
-      "operation": "listAllData",
-      "publicOperation": "listAllData",
+      "operation": "list",
+      "publicOperation": "list",
       "deprecated": false,
       "method": "GET",
       "path": "/planets",
@@ -845,7 +1046,7 @@
       "publicCookieParams": [],
       "cookieParamDetails": [],
       "paramsModel": {
-        "publicName": "PlanetListAllDataParams"
+        "publicName": "PlanetListParams"
       },
       "response": {
         "status": "200",
@@ -894,7 +1095,8 @@
         "creator",
         "tags",
         "lastUpdated",
-        "callbackUrl"
+        "successCallbackUrl",
+        "failureCallbackUrl"
       ],
       "publicBodyParams": [
         "id",
@@ -910,7 +1112,8 @@
         "creator",
         "tags",
         "lastUpdated",
-        "callbackUrl"
+        "successCallbackUrl",
+        "failureCallbackUrl"
       ],
       "bodyParamDetails": [
         {
@@ -927,7 +1130,7 @@
         },
         {
           "name": "type",
-          "required": false
+          "required": true
         },
         {
           "name": "habitabilityIndex",
@@ -966,7 +1169,11 @@
           "required": false
         },
         {
-          "name": "callbackUrl",
+          "name": "successCallbackUrl",
+          "required": false
+        },
+        {
+          "name": "failureCallbackUrl",
           "required": false
         }
       ],
@@ -1012,7 +1219,7 @@
         ]
       },
       "responseModel": {
-        "name": "Planet",
+        "name": "planet",
         "publicAliases": []
       },
       "result": {
@@ -1110,7 +1317,7 @@
         ]
       },
       "responseModel": {
-        "name": "Planet",
+        "name": "planet",
         "publicAliases": []
       },
       "result": {
@@ -1171,7 +1378,8 @@
         "creator",
         "tags",
         "lastUpdated",
-        "callbackUrl"
+        "successCallbackUrl",
+        "failureCallbackUrl"
       ],
       "publicBodyParams": [
         "id",
@@ -1187,7 +1395,8 @@
         "creator",
         "tags",
         "lastUpdated",
-        "callbackUrl"
+        "successCallbackUrl",
+        "failureCallbackUrl"
       ],
       "bodyParamDetails": [
         {
@@ -1204,7 +1413,7 @@
         },
         {
           "name": "type",
-          "required": false
+          "required": true
         },
         {
           "name": "habitabilityIndex",
@@ -1243,7 +1452,11 @@
           "required": false
         },
         {
-          "name": "callbackUrl",
+          "name": "successCallbackUrl",
+          "required": false
+        },
+        {
+          "name": "failureCallbackUrl",
           "required": false
         }
       ],
@@ -1296,7 +1509,7 @@
         ]
       },
       "responseModel": {
-        "name": "Planet",
+        "name": "planet",
         "publicAliases": []
       },
       "result": {
@@ -1553,30 +1766,55 @@
       "transport": "http"
     },
     {
-      "resource": "planets",
-      "publicResource": "planets",
-      "operation": "listMoons",
-      "publicOperation": "listMoons",
+      "resource": "celestialBodies",
+      "publicResource": "celestialBodies",
+      "operation": "create",
+      "publicOperation": "create",
       "deprecated": false,
-      "method": "GET",
-      "path": "/moons",
+      "method": "POST",
+      "path": "/celestial-bodies",
       "pathParams": [],
       "publicPathParams": [],
       "queryParams": [],
       "publicQueryParams": [],
       "headerParams": [],
       "publicHeaderParams": [],
-      "bodyParams": [],
-      "publicBodyParams": [],
-      "bodyParamDetails": [],
+      "bodyParams": [
+        "body"
+      ],
+      "publicBodyParams": [
+        "body"
+      ],
+      "bodyParamDetails": [
+        {
+          "name": "body",
+          "required": true
+        }
+      ],
       "pathParamDetails": [],
       "queryParamDetails": [],
       "headerParamDetails": [],
       "cookieParams": [],
       "publicCookieParams": [],
       "cookieParamDetails": [],
+      "paramsModel": {
+        "publicName": "CelestialBodyCreateParams"
+      },
+      "requestBody": {
+        "contentType": "application/json",
+        "encoding": "json",
+        "contents": [
+          {
+            "contentType": "application/json",
+            "encoding": "json"
+          }
+        ],
+        "required": true,
+        "publicName": "body",
+        "publicIdentifier": "body"
+      },
       "response": {
-        "status": "200",
+        "status": "201",
         "contentType": "application/json",
         "encoding": "json",
         "contents": [
@@ -1586,43 +1824,9 @@
           }
         ]
       },
-      "errorResponses": [],
-      "responseLinks": [],
-      "transport": "http"
-    },
-    {
-      "resource": "planets",
-      "publicResource": "planets",
-      "operation": "listComets",
-      "publicOperation": "listComets",
-      "deprecated": false,
-      "method": "GET",
-      "path": "/comets",
-      "pathParams": [],
-      "publicPathParams": [],
-      "queryParams": [],
-      "publicQueryParams": [],
-      "headerParams": [],
-      "publicHeaderParams": [],
-      "bodyParams": [],
-      "publicBodyParams": [],
-      "bodyParamDetails": [],
-      "pathParamDetails": [],
-      "queryParamDetails": [],
-      "headerParamDetails": [],
-      "cookieParams": [],
-      "publicCookieParams": [],
-      "cookieParamDetails": [],
-      "response": {
-        "status": "200",
-        "contentType": "application/json",
-        "encoding": "json",
-        "contents": [
-          {
-            "contentType": "application/json",
-            "encoding": "json"
-          }
-        ]
+      "responseModel": {
+        "name": "celestial_body",
+        "publicAliases": []
       },
       "errorResponses": [],
       "responseLinks": [],
@@ -1714,7 +1918,7 @@
         ]
       },
       "responseModel": {
-        "name": "User",
+        "name": "user",
         "publicAliases": []
       },
       "result": {
@@ -1881,7 +2085,7 @@
         ]
       },
       "responseModel": {
-        "name": "Token",
+        "name": "token",
         "publicAliases": []
       },
       "result": {
@@ -1981,7 +2185,7 @@
         ]
       },
       "responseModel": {
-        "name": "User",
+        "name": "user",
         "publicAliases": []
       },
       "result": {
@@ -2030,19 +2234,30 @@
   "webhooks": [
     {
       "event": "newPlanet",
-      "name": "NewPlanet",
+      "name": "Unwrap",
       "source": "webhook",
       "method": "POST",
       "path": "newPlanet"
     },
     {
-      "event": "{$request.body#/callbackUrl}",
-      "name": "RequestBodyCallbackUrl",
+      "event": "{$request.body#/successCallbackUrl}",
+      "name": "RequestBodySuccessCallbackUrl",
       "source": "callback",
       "method": "POST",
-      "path": "POST /planets -> {$request.body#/callbackUrl}",
+      "path": "POST /planets -> {$request.body#/successCallbackUrl}",
       "payloadModel": {
-        "name": "Planet",
+        "name": "planet",
+        "publicAliases": []
+      }
+    },
+    {
+      "event": "{$request.body#/successCallbackUrl}",
+      "name": "RequestBodySuccessCallbackUrl",
+      "source": "callback",
+      "method": "POST",
+      "path": "POST /planets -> {$request.body#/successCallbackUrl}",
+      "payloadModel": {
+        "name": "planet",
         "publicAliases": []
       }
     }

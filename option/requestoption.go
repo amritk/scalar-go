@@ -16,7 +16,7 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-// RequestOption is an option for the requests made by the Scalar Galaxy API Client
+// RequestOption is an option for the requests made by the Demo API (Scalar Galaxy) Client
 // which can be supplied to clients, services, and methods.
 type RequestOption = requestconfig.RequestOption
 
@@ -271,7 +271,7 @@ func WithEnvironmentProduction() RequestOption {
 
 // WithEnvironmentRespondsWithYourRequestData sets the default base URL to the "respondswithyourrequestdata" environment.
 func WithEnvironmentRespondsWithYourRequestData() RequestOption {
-	return requestconfig.WithDefaultBaseURL("{protocol}://void.scalar.com/{path}/")
+	return requestconfig.WithDefaultBaseURL("https://void.scalar.com/{path}/")
 }
 
 // WithBearerAuth returns a RequestOption that sets the client setting "bearerAuth".
@@ -322,6 +322,22 @@ func WithAPIKeyQuery(value string) RequestOption {
 func WithAPIKeyCookie(value string) RequestOption {
 	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
 		r.Request.AddCookie(&http.Cookie{Name: "api_key", Value: value})
+		return nil
+	})
+}
+
+// WithOAuth2 returns a RequestOption that sets the client setting "oAuth2".
+func WithOAuth2(value string) RequestOption {
+	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
+		r.Request.Header.Set("Authorization", "Bearer "+value)
+		return nil
+	})
+}
+
+// WithOpenIDConnect returns a RequestOption that sets the client setting "openIdConnect".
+func WithOpenIDConnect(value string) RequestOption {
+	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
+		r.Request.Header.Set("Authorization", "Bearer "+value)
 		return nil
 	})
 }
