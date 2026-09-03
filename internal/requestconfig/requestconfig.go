@@ -27,7 +27,7 @@ import (
 
 func getDefaultHeaders() map[string]string {
 	return map[string]string{
-		"User-Agent": fmt.Sprintf("DemoApiScalarGalaxy/Go %s", internal.PackageVersion),
+		"User-Agent": fmt.Sprintf("Testing12/Go %s", internal.PackageVersion),
 	}
 }
 

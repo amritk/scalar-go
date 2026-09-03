@@ -1,4 +1,4 @@
-package demoapiscalargalaxy
+package asdasd
 
 import (
 	"github.com/amritk/scalar-go/internal/param"

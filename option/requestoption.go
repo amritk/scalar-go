@@ -16,7 +16,7 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-// RequestOption is an option for the requests made by the Demo API (Scalar Galaxy) Client
+// RequestOption is an option for the requests made by the testing 12 API Client
 // which can be supplied to clients, services, and methods.
 type RequestOption = requestconfig.RequestOption
 
@@ -304,16 +304,6 @@ func WithBasicAuthPassword(value string) RequestOption {
 func WithAPIKeyHeader(value string) RequestOption {
 	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
 		r.Request.Header.Set("X-API-Key", value)
-		return nil
-	})
-}
-
-// WithAPIKeyQuery returns a RequestOption that sets the client setting "apiKeyQuery".
-func WithAPIKeyQuery(value string) RequestOption {
-	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
-		query := r.Request.URL.Query()
-		query.Set("api_key", value)
-		r.Request.URL.RawQuery = query.Encode()
 		return nil
 	})
 }

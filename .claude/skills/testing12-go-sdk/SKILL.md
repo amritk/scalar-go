@@ -1,11 +1,11 @@
 ---
-name: demo-api-scalar-galaxy-go-sdk
-description: "Go SDK for Demo API (Scalar Galaxy). Use when writing Go code that calls Demo API (Scalar Galaxy) with the github.com/amritk/scalar-go package: installing it, constructing and authenticating the client, and calling API operations."
+name: testing12-go-sdk
+description: "Go SDK for testing 12 API. Use when writing Go code that calls testing 12 API with the github.com/amritk/scalar-go package: installing it, constructing and authenticating the client, and calling API operations."
 ---
 
-# Demo API (Scalar Galaxy) Go SDK
+# testing 12 Go SDK
 
-Generated Go client for Demo API (Scalar Galaxy), published as `github.com/amritk/scalar-go`. Use the generated client instead of hand-writing HTTP requests.
+Generated Go client for testing 12 API, published as `github.com/amritk/scalar-go`. Use the generated client instead of hand-writing HTTP requests.
 
 ## Install
 
@@ -32,7 +32,6 @@ Provide credentials using the options below. Environment variables are read auto
 - `option.WithBasicAuthUsername` (env: `BASIC_AUTH_USERNAME`) — Credential for the basicAuth_username client option.
 - `option.WithBasicAuthPassword` (env: `BASIC_AUTH_PASSWORD`) — Credential for the basicAuth_password client option.
 - `option.WithAPIKeyHeader` (env: `API_KEY_HEADER`) — API key request header
-- `option.WithAPIKeyQuery` (env: `API_KEY_QUERY`) — API key query parameter
 - `option.WithAPIKeyCookie` (env: `API_KEY_COOKIE`) — API key browser cookie
 - `option.WithOAuth2` (env: `O_AUTH2`) — OAuth 2.0 authentication
 - `option.WithOpenIDConnect` (env: `OPEN_ID_CONNECT`) — OpenID Connect Authentication

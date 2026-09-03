@@ -1,4 +1,4 @@
-# Demo API (Scalar Galaxy) Go API
+# testing 12 Go API
 
 Complete reference of every operation, grouped by resource. See [the README](./README.md) for usage and configuration.
 

@@ -1,6 +1,6 @@
-# Demo API (Scalar Galaxy)
+# testing 12
 
-This library provides convenient access to the Demo API (Scalar Galaxy) from Go.
+This library provides convenient access to the testing 12 REST API from Go.
 
 The full API of this library can be found in [api.md](./api.md).
 
@@ -77,7 +77,6 @@ Pass credentials to the generated client constructor. Environment variables are 
 | `option.WithBasicAuthUsername` | `string \| provider` | - | Credential for the basicAuth_username client option. Defaults to BASIC_AUTH_USERNAME. |
 | `option.WithBasicAuthPassword` | `string \| provider` | - | Credential for the basicAuth_password client option. Defaults to BASIC_AUTH_PASSWORD. |
 | `option.WithAPIKeyHeader` | `string \| provider` | - | API key request header Defaults to API_KEY_HEADER. |
-| `option.WithAPIKeyQuery` | `string \| provider` | - | API key query parameter Defaults to API_KEY_QUERY. |
 | `option.WithAPIKeyCookie` | `string \| provider` | - | API key browser cookie Defaults to API_KEY_COOKIE. |
 | `option.WithOAuth2` | `string \| provider` | - | OAuth 2.0 authentication Defaults to O_AUTH2. |
 | `option.WithOpenIDConnect` | `string \| provider` | - | OpenID Connect Authentication Defaults to OPEN_ID_CONNECT. |
@@ -138,7 +137,6 @@ client := sdk.NewClient(
 | `option.WithBasicAuthUsername` | `func(string) option.RequestOption` | `os.Getenv("BASIC_AUTH_USERNAME")` | Credential for the basicAuth_username client option. |
 | `option.WithBasicAuthPassword` | `func(string) option.RequestOption` | `os.Getenv("BASIC_AUTH_PASSWORD")` | Credential for the basicAuth_password client option. |
 | `option.WithAPIKeyHeader` | `func(string) option.RequestOption` | `os.Getenv("API_KEY_HEADER")` | API key request header |
-| `option.WithAPIKeyQuery` | `func(string) option.RequestOption` | `os.Getenv("API_KEY_QUERY")` | API key query parameter |
 | `option.WithAPIKeyCookie` | `func(string) option.RequestOption` | `os.Getenv("API_KEY_COOKIE")` | API key browser cookie |
 | `option.WithOAuth2` | `func(string) option.RequestOption` | `os.Getenv("O_AUTH2")` | OAuth 2.0 authentication |
 | `option.WithOpenIDConnect` | `func(string) option.RequestOption` | `os.Getenv("OPEN_ID_CONNECT")` | OpenID Connect Authentication |
