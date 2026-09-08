@@ -1,4 +1,4 @@
-# testing 12 Go API
+# testing me out Go API
 
 Complete reference of every operation, grouped by resource. See [the README](./README.md) for usage and configuration.
 
@@ -69,6 +69,7 @@ Time to play god and create a new planet. What do you think? Ah, don't think too
 planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
 	Planet: sdk.PlanetParam{
 		Name: sdk.F[string]("Mars"),
+		Type: sdk.F[sdk.PlanetType](sdk.PlanetType("terrestrial")),
 	},
 })
 if err != nil {
@@ -108,6 +109,7 @@ Sometimes you make mistakes, that's fine. No worries, you can update all planets
 planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
 	Planet: sdk.PlanetParam{
 		Name: sdk.F[string]("Mars"),
+		Type: sdk.F[sdk.PlanetType](sdk.PlanetType("terrestrial")),
 	},
 })
 if err != nil {
@@ -161,6 +163,7 @@ Celestial bodies are the planets and satellites in the Scalar Galaxy.
 celestialBody, err := client.CelestialBodies.New(context.Background(), sdk.CelestialBodyNewParams{
 	CelestialBody: sdk.PlanetParam{
 		Name: sdk.F[string]("Mars"),
+		Type: sdk.F[sdk.PlanetType](sdk.PlanetType("terrestrial")),
 	},
 })
 if err != nil {

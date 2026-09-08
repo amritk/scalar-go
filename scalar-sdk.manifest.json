@@ -1,7 +1,7 @@
 {
-  "name": "Testing12",
-  "slug": "testing12",
-  "generatorVersion": "0.32.0",
+  "name": "TestingMeOut",
+  "slug": "testingMeOut",
+  "generatorVersion": "0.32.5",
   "servers": [
     "https://galaxy.scalar.com",
     "{protocol}://void.scalar.com/{path}"
@@ -376,7 +376,10 @@
               "kind": "primitive",
               "type": "number",
               "format": "float",
-              "validation": {}
+              "validation": {
+                "minimum": 0,
+                "maximum": 1
+              }
             }
           },
           {
@@ -401,7 +404,10 @@
                   "type": {
                     "kind": "primitive",
                     "type": "number",
-                    "format": "float"
+                    "format": "float",
+                    "validation": {
+                      "exclusiveMinimum": 0
+                    }
                   }
                 },
                 {
@@ -418,7 +424,10 @@
                   "type": {
                     "kind": "primitive",
                     "type": "number",
-                    "format": "float"
+                    "format": "float",
+                    "validation": {
+                      "exclusiveMinimum": 0
+                    }
                   }
                 },
                 {
@@ -553,7 +562,10 @@
                     "type": {
                       "kind": "primitive",
                       "type": "number",
-                      "format": "float"
+                      "format": "float",
+                      "validation": {
+                        "exclusiveMaximum": 100
+                      }
                     }
                   }
                 ],

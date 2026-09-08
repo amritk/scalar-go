@@ -1,6 +1,6 @@
-# testing 12
+# testing me out
 
-This library provides convenient access to the testing 12 REST API from Go.
+This library provides convenient access to the testing me out REST API from Go.
 
 The full API of this library can be found in [api.md](./api.md).
 
