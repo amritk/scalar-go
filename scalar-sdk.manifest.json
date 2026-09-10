@@ -1,6 +1,6 @@
 {
-  "name": "Asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd",
-  "slug": "asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd",
+  "name": "TestIt",
+  "slug": "testIt",
   "generatorVersion": "0.32.7",
   "servers": [
     "https://galaxy.scalar.com",

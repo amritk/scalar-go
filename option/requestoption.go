@@ -16,7 +16,7 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-// RequestOption is an option for the requests made by the asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd API Client
+// RequestOption is an option for the requests made by the Test it API Client
 // which can be supplied to clients, services, and methods.
 type RequestOption = requestconfig.RequestOption
 

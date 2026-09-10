@@ -1,11 +1,11 @@
 ---
-name: asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd-go-sdk
-description: "Go SDK for asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd API. Use when writing Go code that calls asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd API with the github.com/amritk/scalar-go package: installing it, constructing and authenticating the client, and calling API operations."
+name: test-it-go-sdk
+description: "Go SDK for Test it API. Use when writing Go code that calls Test it API with the github.com/amritk/scalar-go package: installing it, constructing and authenticating the client, and calling API operations."
 ---
 
-# asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd Go SDK
+# Test it Go SDK
 
-Generated Go client for asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd API, published as `github.com/amritk/scalar-go`. Use the generated client instead of hand-writing HTTP requests.
+Generated Go client for Test it API, published as `github.com/amritk/scalar-go`. Use the generated client instead of hand-writing HTTP requests.
 
 ## Install
 

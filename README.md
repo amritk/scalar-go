@@ -1,6 +1,6 @@
-# asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd
+# Test it
 
-This library provides convenient access to the asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd REST API from Go.
+This library provides convenient access to the Test it REST API from Go.
 
 The full API of this library can be found in [api.md](./api.md).
 
