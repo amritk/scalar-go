@@ -1,6 +1,6 @@
-# testing me out
+# asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd
 
-This library provides convenient access to the testing me out REST API from Go.
+This library provides convenient access to the asdasdsdasdsdsdsdsdsdsdsdsdsdsdsdsd REST API from Go.
 
 The full API of this library can be found in [api.md](./api.md).
 
