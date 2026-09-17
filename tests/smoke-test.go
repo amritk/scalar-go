@@ -43,7 +43,7 @@ type smokeCase struct {
 }
 
 func _smokeCase0() {
-	planet, err := client.Planets.List(context.Background(), sdk.PlanetListParams{
+	pizza, err := client.Planets.Pizzas.List(context.Background(), sdk.PlanetPizzaListParams{
 		Limit:  sdk.F[int64](10),
 		Offset: sdk.F[int64](0),
 	})
@@ -51,11 +51,11 @@ func _smokeCase0() {
 		panic(err)
 	}
 
-	fmt.Println(planet)
+	fmt.Println(pizza)
 }
 
 func _smokeCase1() {
-	planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
+	pizza, err := client.Planets.Pizzas.New(context.Background(), sdk.PlanetPizzaNewParams{
 		Planet: sdk.PlanetParam{
 			Name: sdk.F[string]("Mars"),
 			Type: sdk.F[sdk.PlanetType](sdk.PlanetType("terrestrial")),
@@ -65,11 +65,11 @@ func _smokeCase1() {
 		panic(err)
 	}
 
-	fmt.Println(planet)
+	fmt.Println(pizza)
 }
 
 func _smokeCase2() {
-	planet, err := client.Planets.New(context.Background(), sdk.PlanetNewParams{
+	pizza, err := client.Planets.Pizzas.New(context.Background(), sdk.PlanetPizzaNewParams{
 		Planet: sdk.PlanetParam{
 			Name:               sdk.F[string]("Mars"),
 			Description:        sdk.F[string]("The red planet"),
@@ -93,88 +93,46 @@ func _smokeCase2() {
 		panic(err)
 	}
 
-	fmt.Println(planet)
+	fmt.Println(pizza)
 }
 
 func _smokeCase3() {
-	planet, err := client.Planets.Get(context.Background(), 1)
+	pizza, err := client.Planets.Pizzas.Get(context.Background(), 1)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(planet)
+	fmt.Println(pizza)
 }
 
 func _smokeCase4() {
-	planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
-		Planet: sdk.PlanetParam{
-			Name: sdk.F[string]("Mars"),
-			Type: sdk.F[sdk.PlanetType](sdk.PlanetType("terrestrial")),
-		},
-	})
+	err := client.Planets.Pizzas.Delete(context.Background(), 1)
 	if err != nil {
 		panic(err)
 	}
-
-	fmt.Println(planet)
 }
 
 func _smokeCase5() {
-	planet, err := client.Planets.Update(context.Background(), 1, sdk.PlanetUpdateParams{
-		Planet: sdk.PlanetParam{
-			Name:               sdk.F[string]("Mars"),
-			Description:        sdk.F[string]("The red planet"),
-			Type:               sdk.F[sdk.PlanetType](sdk.PlanetType("terrestrial")),
-			HabitabilityIndex:  sdk.F[float64](0.68),
-			PhysicalProperties: sdk.F[sdk.PlanetPhysicalPropertiesParam](sdk.PlanetPhysicalPropertiesParam{}),
-			Atmosphere:         sdk.F[[]sdk.PlanetAtmosphereParam]([]sdk.PlanetAtmosphereParam{sdk.PlanetAtmosphereParam{}}),
-			DiscoveredAt:       sdk.F[time.Time](time.Now()),
-			Image:              sdk.F[string]("https://cdn.scalar.com/photos/mars.jpg"),
-			Satellites: sdk.F[[]sdk.SatelliteParam]([]sdk.SatelliteParam{sdk.SatelliteParam{
-				Name: sdk.F[string]("Phobos"),
-				Type: sdk.F[sdk.SatelliteType](sdk.SatelliteType("moon")),
-			}}),
-			Creator:            sdk.F[sdk.UserParam](sdk.UserParam{}),
-			Tags:               sdk.F[[]string]([]string{"solar-system", "rocky", "explored"}),
-			SuccessCallbackURL: sdk.F[string]("https://example.com/webhook"),
-			FailureCallbackURL: sdk.F[string]("https://example.com/webhook"),
-		},
-	})
+	pizza, err := client.Planets.Pizzas.UploadImage(context.Background(), 1, sdk.PlanetPizzaUploadImageParams{})
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(planet)
+	fmt.Println(pizza)
 }
 
 func _smokeCase6() {
-	err := client.Planets.Delete(context.Background(), 1)
-	if err != nil {
-		panic(err)
-	}
-}
-
-func _smokeCase7() {
-	planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{})
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(planet)
-}
-
-func _smokeCase8() {
-	planet, err := client.Planets.UploadImage(context.Background(), 1, sdk.PlanetUploadImageParams{
+	pizza, err := client.Planets.Pizzas.UploadImage(context.Background(), 1, sdk.PlanetPizzaUploadImageParams{
 		Image: sdk.F[io.Reader](strings.NewReader("")),
 	})
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(planet)
+	fmt.Println(pizza)
 }
 
-func _smokeCase9() {
+func _smokeCase7() {
 	celestialBody, err := client.CelestialBodies.New(context.Background(), sdk.CelestialBodyNewParams{
 		CelestialBody: sdk.PlanetParam{
 			Name: sdk.F[string]("Mars"),
@@ -188,7 +146,7 @@ func _smokeCase9() {
 	fmt.Println(celestialBody)
 }
 
-func _smokeCase10() {
+func _smokeCase8() {
 	authentication, err := client.Authentication.NewUser(context.Background(), sdk.AuthenticationNewUserParams{
 		Email:    sdk.F[string]("marc@scalar.com"),
 		Password: sdk.F[string]("i-love-scalar"),
@@ -201,7 +159,7 @@ func _smokeCase10() {
 	fmt.Println(authentication)
 }
 
-func _smokeCase11() {
+func _smokeCase9() {
 	authentication, err := client.Authentication.NewToken(context.Background(), sdk.AuthenticationNewTokenParams{
 		Email:    sdk.F[string]("marc@scalar.com"),
 		Password: sdk.F[string]("i-love-scalar"),
@@ -213,7 +171,7 @@ func _smokeCase11() {
 	fmt.Println(authentication)
 }
 
-func _smokeCase12() {
+func _smokeCase10() {
 	authentication, err := client.Authentication.ListMe(context.Background())
 	if err != nil {
 		panic(err)
@@ -254,34 +212,18 @@ var cases = []smokeCase{
 	},
 
 	{
-		Operation: "update",
-		Method:    "PUT",
+		Operation: "delete",
+		Method:    "DELETE",
 		Path:      "/planets/{planetId}",
-		Label:     "required params",
 		Run:       _smokeCase4,
 	},
 
 	{
-		Operation: "update",
-		Method:    "PUT",
-		Path:      "/planets/{planetId}",
-		Label:     "all params",
-		Run:       _smokeCase5,
-	},
-
-	{
-		Operation: "delete",
-		Method:    "DELETE",
-		Path:      "/planets/{planetId}",
-		Run:       _smokeCase6,
-	},
-
-	{
 		Operation: "uploadImage",
 		Method:    "POST",
 		Path:      "/planets/{planetId}/image",
 		Label:     "required params",
-		Run:       _smokeCase7,
+		Run:       _smokeCase5,
 	},
 
 	{
@@ -289,35 +231,35 @@ var cases = []smokeCase{
 		Method:    "POST",
 		Path:      "/planets/{planetId}/image",
 		Label:     "all params",
-		Run:       _smokeCase8,
+		Run:       _smokeCase6,
 	},
 
 	{
 		Operation: "create",
 		Method:    "POST",
 		Path:      "/celestial-bodies",
-		Run:       _smokeCase9,
+		Run:       _smokeCase7,
 	},
 
 	{
 		Operation: "createUser",
 		Method:    "POST",
 		Path:      "/user/signup",
-		Run:       _smokeCase10,
+		Run:       _smokeCase8,
 	},
 
 	{
 		Operation: "createToken",
 		Method:    "POST",
 		Path:      "/auth/token",
-		Run:       _smokeCase11,
+		Run:       _smokeCase9,
 	},
 
 	{
 		Operation: "listMe",
 		Method:    "GET",
 		Path:      "/me",
-		Run:       _smokeCase12,
+		Run:       _smokeCase10,
 	},
 }
 

@@ -5,11 +5,9 @@ package scalar
 import (
 	"errors"
 	"net/http"
-	"reflect"
 	"slices"
 
 	standardwebhooks "github.com/standard-webhooks/standard-webhooks/libraries/go"
-	"github.com/tidwall/gjson"
 
 	"github.com/amritk/scalar-go/internal/apijson"
 	"github.com/amritk/scalar-go/internal/requestconfig"
@@ -61,46 +59,18 @@ func (r *WebhookService) Parsed(payload []byte, headers http.Header, opts ...opt
 }
 
 type ParsedWebhookEvent struct {
-	JSON  parsedWebhookEventJSON `json:"-"`
-	union ParsedWebhookEventUnion
+	JSON parsedWebhookEventJSON `json:"-"`
 }
 
-// parsedWebhookEventJSON contains the JSON metadata for the struct [ParsedWebhookEvent]
 type parsedWebhookEventJSON struct {
-	raw         string
 	ExtraFields map[string]apijson.Field
+	raw         string
+}
+
+func (r *ParsedWebhookEvent) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
 }
 
 func (r parsedWebhookEventJSON) RawJSON() string {
 	return r.raw
 }
-
-func (r *ParsedWebhookEvent) UnmarshalJSON(data []byte) (err error) {
-	*r = ParsedWebhookEvent{}
-	err = apijson.UnmarshalRoot(data, &r.union)
-	if err != nil {
-		return err
-	}
-	return apijson.Port(r.union, &r)
-}
-
-func (r ParsedWebhookEvent) AsUnion() ParsedWebhookEventUnion {
-	return r.union
-}
-
-type ParsedWebhookEventUnion interface {
-	implementsParsedWebhookEvent()
-}
-
-func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*ParsedWebhookEventUnion)(nil)).Elem(),
-		"",
-		apijson.UnionVariant{
-			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(NewPlanetWebhookEvent{}),
-		},
-	)
-}
-
-func (r NewPlanetWebhookEvent) implementsParsedWebhookEvent() {}

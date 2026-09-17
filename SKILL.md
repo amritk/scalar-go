@@ -55,7 +55,7 @@ func main() {
 		option.WithBearerAuth(os.Getenv("BEARER_AUTH")),
 	)
 
-	planet, err := client.Planets.List(context.Background(), sdk.PlanetListParams{
+	pizza, err := client.Planets.Pizzas.List(context.Background(), sdk.PlanetPizzaListParams{
 		Limit:  sdk.F[int64](10),
 		Offset: sdk.F[int64](0),
 	})
@@ -63,7 +63,7 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(planet)
+	fmt.Println(pizza)
 }
 ```
 
@@ -74,7 +74,7 @@ Method names, parameter shapes, and response types are generated from the API de
 Non-success responses return generated API errors. Error objects expose status, headers, response body, and request metadata where the target runtime supports it.
 
 ```go
-planet, err := client.Planets.List(context.Background(), sdk.PlanetListParams{
+pizza, err := client.Planets.Pizzas.List(context.Background(), sdk.PlanetPizzaListParams{
 	Limit:  sdk.F[int64](10),
 	Offset: sdk.F[int64](0),
 })
